@@ -57,6 +57,16 @@ def checkLoc(curLoc, geofencingData, roomStatus):
 
     return roomStatus
 
+def dict_compare(d1, d2):
+    d1_keys = set(d1.keys())
+    d2_keys = set(d2.keys())
+    shared_keys = d1_keys.intersection(d2_keys)
+    added = d1_keys - d2_keys
+    removed = d2_keys - d1_keys
+    modified = {o : (d1[o], d2[o]) for o in shared_keys if d1[o] != d2[o]}
+    same = set(o for o in shared_keys if d1[o] == d2[o])
+    return added, removed, modified, same
+
 path = os.path.dirname(__file__)
 f = open(path + '/geofenceData.json', "r")
 geofencingData = json.load(f)
@@ -69,26 +79,22 @@ for room in geofencingData:
     i += 1
     roomStatus["room"+str(i)] = False
 
-curLoc = (3.5,3)
-print(checkLoc(curLoc, geofencingData, roomStatus))
-
 #checking if anyone in room
-#while True:
-#    #"pull" current location
-#    curLoc = (20,20)
-#
-#    roomStatus1 = checkLoc(curLoc, geofencingData, roomStatus)
-#    print(roomStatus1)
-#    time.sleep(2)
-#
-#    #"pull" current location
-#    curLoc = (3.5,3)
-#    roomStatus2 = checkLoc(curLoc, geofencingData, roomStatus)
-#    print(roomStatus2)
+#"pull" current location
+curLoc = (20,20)
+initialStatus = checkLoc(curLoc, geofencingData, roomStatus)
+print(initialStatus)
 
-#    if roomStatus1 != roomStatus2:
-#        for room in roomStatus1:
-#            print(room)
-#    else:
-#        print(roomStatus1)
-#        print(roomStatus2)
+time.sleep(2)
+
+#"pull" current location
+curLoc = (3.5,3)
+finalStatus = checkLoc(curLoc, geofencingData, roomStatus)
+print(finalStatus)
+
+print("\n")
+print(initialStatus)
+print(finalStatus)
+
+#added, removed, modified, same = dict_compare(initialStatus, finalStatus)
+#print(modified)
