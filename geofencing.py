@@ -40,6 +40,21 @@ for room in geofencingData:
 
 #checking if anyone in room
 while True:
-    
+    #"pull" current location
     curLoc = (20,20)
-    print(checkLoc(curLoc, geofencingData, roomStatus))
+
+    roomStatus1 = checkLoc(curLoc, geofencingData, roomStatus)
+    print(roomStatus1)
+    time.sleep(2)
+
+    #"pull" current location
+    curLoc = (3.5,3)
+    roomStatus2 = checkLoc(curLoc, geofencingData, roomStatus)
+    print(roomStatus2)
+
+#    if roomStatus1 != roomStatus2:
+#        for room in roomStatus1:
+#            print(room)
+#    else:
+#        print(roomStatus1)
+#        print(roomStatus2)
