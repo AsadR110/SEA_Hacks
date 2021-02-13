@@ -1,17 +1,35 @@
 import json
 import os
+import time
+
+def checkLoc(curLoc, geofencingData, roomStatus):
+    i = 0
+    for room in geofencingData:
+        i += 1
+        if geofencingData["room"+str(i)]["type"] == "4 corner":
+            for XValue in geofencingData["room"+str(i)]["cornersX"]:
+                #loc is greater than any single x value
+                if  curLoc[0] > XValue:
+                    for XValue in geofencingData["room"+str(i)]["cornersX"]:
+                        #loc is less than any single x value (betweeen 2 X)
+                        if  curLoc[0] < XValue:
+                            for YValue in geofencingData["room"+str(i)]["cornersY"]:
+                                #loc is greater than any single y value
+                                if  curLoc[1] > YValue:
+                                    for YValue in geofencingData["room"+str(i)]["cornersY"]:
+                                        #loc is less than any single y value (betweeen 2 Y)
+                                        if  curLoc[1] < YValue:
+                                            roomStatus["room"+str(i)] = True
+        else:
+            pass #@neil
+
+    return roomStatus
+
 
 path = os.path.dirname(__file__)
-
-while True:
-    curLoc = (3,13)
-
-    f = open(path + '/sample.json', "r")
-    geofencingData = json.load(f)
-
-    for room in geofencingData:
-        if room["type"] == "4 corner":
-            print(room)
+f = open(path + '/sample.json', "r")
+geofencingData = json.load(f)
+f.close()
 
         if room["type"] == "6 corner":
             # Generate 2 "rooms"
