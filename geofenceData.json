@@ -1,14 +1,20 @@
 {
     "room1": {
-        "name": "bedroom",
-        "type": "4 corner",
-        "cornersX": [3,3,4,5],
-        "cornersY": [1,4,1,4]
+        "name" : "bedroom",
+        "type" : "4 corner",
+        "cornersX" : [3,3,4,4],
+        "cornersY" : [1,4,1,4]
     },
     "room2": {
-        "name": "bathroom",
-        "type": "4 corner",
-        "cornersX": [6,6,8,8],
-        "cornersY": [1,7,1,7]
+        "name" : "bathroom",
+        "type" : "4 corner",
+        "cornersX" : [6,6,8,8],
+        "cornersY" : [1,7,1,7]
+    },
+    "room3" : {
+        "name" : "living room",
+        "type" : "6 corner",
+        "cornersX" : [10, 10, 12, 12, 12, 8, 8],
+        "cornersY" : [4, 5, 5, 4, 0, 0, 4]
     }
 }
