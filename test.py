@@ -8,7 +8,10 @@ def dict_compare(d1, d2):
     same = set(o for o in shared_keys if d1[o] == d2[o])
     return added, removed, modified, same
 
-x = {'room1': False, 'room2': False}
-y = {'room1': True, 'room2': False}
+x = {'room1': False, 'room2': False, 'room3': False}
+y = {'room1': True, 'room2': False, 'room3': True}
 added, removed, modified, same = dict_compare(x, y)
 print(modified)
+
+for key in modified:
+    print(modified[key])
