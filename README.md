@@ -1,2 +1,7 @@
 # SEA_HACKS
-test
+
+Dependencies:
+- requests
+- json
+- time
+- 
