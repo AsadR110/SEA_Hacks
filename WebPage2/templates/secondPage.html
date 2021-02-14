@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Login Page{% endblock %}
+{% block content %}
+<form action = "#" method="post">
+		Location Type: <br>
+		<input type = "radio"  name = "roomType" id = "fcorner"  value="fcorner">
+		<label for = "fcorner" > Four Corner Room </label> <br>
+		<input type = "radio" name = "roomType" id = "scorner" value="scorner" >
+		<label for = "scorner" > Six Corner Room </label> <br>
+        <p> <input type = "submit" value = "Submit" > </p>
+</form>
+{% endblock %}
