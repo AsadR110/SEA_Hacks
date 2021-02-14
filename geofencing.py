@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import requests
 
 # Check if a person is in a certain room
 def roomCheck(curLoc, roomData):
@@ -127,8 +128,10 @@ while True:
     for room in modified:
         if modified[room][1] == True:
             print("Turn light ON for " + str(room))
+            os.system("python3 homeScript.py -s " + str(room) + " 1")
         else:
             print("Turn light OFF for " + str(room))
+            os.system("python3 homeScript.py -s " + str(room) + " 0")
     
     previousStatus = currentStatus
     time.sleep(2)
