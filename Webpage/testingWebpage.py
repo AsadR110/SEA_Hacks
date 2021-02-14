@@ -1,10 +1,17 @@
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, redirect, url_for, render_template, request
 
 app = Flask(__name__)
 
-@app.route("/")
-def homepage():
-    return render_template("roomWebpage.html")
+# @app.route("/", methods= ["POST", "GET"])
+# def homepage():
+#     if request.method == "POST" :
+#         totalRooms = request.form["rnumber"]
+#         return redirect(url_for("totalRooms", usr=totalRooms))
+#     else : render_template("roomWebpage.html")
+
+# @app.route("/")
+# def homepage():
+#     return render_template("index.html")
 
 
 
@@ -15,17 +22,17 @@ def home():
     return render_template("testingLogic.html", title = title, paragraph = paragraph)
 
 
-# @app.route("/<name>")
-# def user(name):
-#     return f"Hello {name}!"
+@app.route("/", methods = ["POST", "GET"])
+def homepage():
+    if request.method == "POST":
+        rNum = request.form["roomNums"]
+        return render_template("secondPage.html")
+    else:
+        return render_template("firstPage.html")
 
-@app.route("/login", methods = ["POST", "GET"])
-def login():
-    return render_template("login.html")
-
-# @app.route("/<usr>")
-# def user(usr):
-#     return  f"<h1>{usr}</h1>"
+@app.route("/<total>")
+def rNums(total):
+    return  f"<h1>{total}</h1>"
 
 
 
@@ -36,4 +43,4 @@ def admin():
     return  redirect(url_for("home"))
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
