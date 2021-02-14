@@ -70,7 +70,6 @@ f = open(path + '/geofenceData.json', "r")
 geofencingData = json.load(f)
 f.close()
 
-#populating dictionary with all rooms
 # People positions
 curLoc = (11, 4.5)
 curLocMultiple = ((11, 4.5), (3.5, 3), (7, 4))
