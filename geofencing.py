@@ -113,7 +113,7 @@ while True:
     f = open(path + '/curLocData.json', "r")
     curLocData = json.load(f)
     f.close()
-    
+
     curLocMultiple = []
     i = 0
     for person in curLocData:
