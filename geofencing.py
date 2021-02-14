@@ -19,7 +19,14 @@ def roomCheck(curLoc, roomData):
                                     return True
     return False
 
-def checkLoc(curLoc, geofencingData, roomStatus):
+def checkLoc(curLoc, geofencingData):
+    #populating dictionary with all rooms
+    i = 0
+    roomStatus = {}
+    for room in geofencingData:
+        i += 1
+        roomStatus["room"+str(i)] = False
+    
     i = 0
     for room in geofencingData: 
         i += 1 
@@ -72,29 +79,19 @@ f = open(path + '/geofenceData.json', "r")
 geofencingData = json.load(f)
 f.close()
 
-#populating dictionary with all rooms
-i = 0
-roomStatus = {}
-for room in geofencingData:
-    i += 1
-    roomStatus["room"+str(i)] = False
-
 #checking if anyone in room
-#"pull" current location
-curLoc = (20,20)
-initialStatus = checkLoc(curLoc, geofencingData, roomStatus)
-print(initialStatus)
+while True:
+    #"pull" current location
+    curLoc = (20,20)
+    initialStatus = checkLoc(curLoc, geofencingData)
 
-time.sleep(2)
+    #"pull" current location
+    curLoc = (3.5,3)
+    finalStatus = checkLoc(curLoc, geofencingData)
 
-#"pull" current location
-curLoc = (3.5,3)
-finalStatus = checkLoc(curLoc, geofencingData, roomStatus)
-print(finalStatus)
-
-print("\n")
-print(initialStatus)
-print(finalStatus)
-
-#added, removed, modified, same = dict_compare(initialStatus, finalStatus)
-#print(modified)
+    added, removed, modified, same = dict_compare(initialStatus, finalStatus)
+    for room in modified:
+        if modified[room][1] == True:
+            print("Turn light ON for " + str(room))
+        else:
+            print("Turn light OFF for " + str(room))
