@@ -23,10 +23,10 @@ def home():
 
 
 @app.route("/", methods = ["POST", "GET"])
-def homepage():
+def mainpage():
     if request.method == "POST":
         rNum = request.form["roomNums"]
-        return render_template("secondPage.html")
+        return redirect(url_for("secondPage"))
     else:
         return render_template("firstPage.html")
 
@@ -34,9 +34,13 @@ def homepage():
 def rNums(total):
     return  f"<h1>{total}</h1>"
 
-
-
-
+@app.route("/Room-Type", methods = ["POST", "GET"])
+def secondPage():
+    if request.method == "POST":
+        rType = request.form["roomType"]
+        return render_template("secondPage.html")
+    else:
+        return render_template("secondPage.html")
 
 @app.route(("/admin"))
 def admin():
