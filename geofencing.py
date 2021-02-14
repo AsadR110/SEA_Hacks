@@ -104,15 +104,23 @@ f.close()
 numberOfRooms = len(geofencingData)
 
 # Determine Initial Position / Previous Position of Everyone
-curLocMultiple = ((11, 4.5), (3.5, 3), (7, 4))
+curLocMultiple = [(1,1), (20,20), (21,21)]
 previousStatus = checkAllPersons(curLocMultiple, geofencingData, numberOfRooms)
 print(previousStatus)
 
 while True:
-    # Pull current position
-    curLocMultiple = ((21, 21), (3.5, 3), (7, 4))
+    #Pull current position
+    f = open(path + '/curLocData.json', "r")
+    curLocData = json.load(f)
+    f.close()
+    
+    curLocMultiple = []
+    i = 0
+    for person in curLocData:
+        i += 1
+        curLocMultiple.append((curLocData["person" + str(i)]["X"], curLocData["person" + str(i)]["Y"]))
+
     currentStatus = checkAllPersons(curLocMultiple, geofencingData, numberOfRooms)
-    print(currentStatus)
 
     # Check if a light needs to be turned on/off
     added, removed, modified, same = dict_compare(previousStatus, currentStatus)
@@ -123,4 +131,5 @@ while True:
             print("Turn light OFF for " + str(room))
     
     previousStatus = currentStatus
-    # time.sleep(2)
+    time.sleep(2)
+    print("refresh")
