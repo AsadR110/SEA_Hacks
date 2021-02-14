@@ -2,19 +2,6 @@ from flask import Flask, redirect, url_for, render_template, request
 
 app = Flask(__name__)
 
-# @app.route("/", methods= ["POST", "GET"])
-# def homepage():
-#     if request.method == "POST" :
-#         totalRooms = request.form["rnumber"]
-#         return redirect(url_for("totalRooms", usr=totalRooms))
-#     else : render_template("roomWebpage.html")
-
-# @app.route("/")
-# def homepage():
-#     return render_template("index.html")
-
-
-
 @app.route("/page2")
 def home():
     title = "Rooms"
@@ -38,7 +25,10 @@ def rNums(total):
 def secondPage():
     if request.method == "POST":
         rType = request.form["roomType"]
-        return render_template("secondPage.html")
+        if rType == "fcorner":
+            return redirect(url_for("fCorners"))
+        elif rType == "scorner":
+            return redirect(url_for("sCorners"))
     else:
         return render_template("secondPage.html")
 
@@ -46,5 +36,13 @@ def secondPage():
 def admin():
     return  redirect(url_for("home"))
 
+@app.route("/Four-Corners")
+def fCorners():
+    return  render_template("fourCorners.html")
+
+@app.route("/Six-Corners")
+def sCorners():
+    return  render_template("sixCorners.html")
+
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True)
