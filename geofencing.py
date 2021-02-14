@@ -105,7 +105,7 @@ f.close()
 numberOfRooms = len(geofencingData)
 
 # Determine Initial Position / Previous Position of Everyone
-curLocMultiple = [(1,1), (20,20), (21,21)]
+curLocMultiple = [(0,0), (0,0), (0,0)]
 previousStatus = checkAllPersons(curLocMultiple, geofencingData, numberOfRooms)
 print(previousStatus)
 
