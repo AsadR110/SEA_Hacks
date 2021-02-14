@@ -17,20 +17,20 @@ def roomCheck(curLoc, roomData):
                                 #loc is less than any single y value (betweeen 2 Y)
                                 if  curLoc[1] < YValue:
                                     return True
-    # return False
+    return False
 
-def checkLoc(curLoc, geofencingData, roomStatus):
+def checkLoc(curLoc, geofencingData, numberOfRooms):
+    roomStatus = {}
+    for i in range(numberOfRooms): # Number of rooms
+        roomStatus["room"+str(i+1)] = False
     i = 0
     for room in geofencingData: 
         i += 1 
         # When using the roomCheck function, just pass the room you are in
         # -> roomCheck(curLoc, geofencingData["room"+str(i)])
         if geofencingData["room"+str(i)]["type"] == "4 corner":
-            # Method 1
-            # roomStatus["room"+str(i)] = roomCheck(curLoc, geofencingData["room"+str(i)])
-            # Method 2
-            if roomCheck(curLoc, geofencingData["room"+str(i)]) is True:
-                roomStatus["room"+str(i)] == True
+            roomStatus["room"+str(i)] = roomCheck(curLoc, geofencingData["room"+str(i)])
+
         else:
             # Generate 2 "rooms"
             room6Corners = {
@@ -52,7 +52,7 @@ def checkLoc(curLoc, geofencingData, roomStatus):
             
             # roomStatus["room"+str(i)] = roomCheck(curLoc, room6Corners["rectangle 1"])
             if roomCheck(curLoc, room6Corners["rectangle 1"]) is True:
-                roomStatus["room"+str(i)] == True
+                roomStatus["room"+str(i)] = True
         
             # If the first rectangle of the room is true, no need to check the second one
             if roomStatus["room"+str(i)] == False:
@@ -61,9 +61,7 @@ def checkLoc(curLoc, geofencingData, roomStatus):
                     room6Corners["rectangle 2"]["cornersX"].append(geofencingData["room"+str(i)]["cornersX"][j]) 
                     room6Corners["rectangle 2"]["cornersY"].append(geofencingData["room"+str(i)]["cornersX"][j])
 
-                # roomStatus["room"+str(i)] = roomCheck(curLoc, room6Corners["rectangle 2"])
-                if roomCheck(curLoc, room6Corners["rectangle 2"]) is True:
-                    roomStatus["room"+str(i)] == True
+                roomStatus["room"+str(i)] = roomCheck(curLoc, room6Corners["rectangle 2"])
 
     return roomStatus
 
@@ -73,28 +71,30 @@ geofencingData = json.load(f)
 f.close()
 
 #populating dictionary with all rooms
-i = 0
-roomStatus = {
-    "room1" : False,
-    "room2" : False,
-    "room3" : False,
-}
-for room in geofencingData:
-    i += 1
-    roomStatus["room"+str(i)] = False
-
 # People positions
 curLoc = (11, 4.5)
-curLocMultiple = ((11, 4.5), (3.5, 3))
+curLocMultiple = ((11, 4.5), (3.5, 3), (7, 4))
 
 numberOfPeople = len(curLocMultiple)
+numberOfRooms = len(geofencingData)
+
+personStatus = []
 for i in range(numberOfPeople):
     print(f'Person {i}')
     print(curLocMultiple[i])
-    print(checkLoc(curLocMultiple[i], geofencingData, roomStatus))
+    personStatus.append(checkLoc(curLocMultiple[i], geofencingData, numberOfRooms))
 
-curLocMultiple = ((7, 4), (3.5, 3))
+print(personStatus)
 
+personStatusAll = {}
+for i in range(numberOfRooms): # Number of rooms
+    personStatusAll["room"+str(i+1)] = False
+for i in range(numberOfRooms): # Number of rooms
+    for j in range(numberOfPeople):
+        if personStatus[j]['room'+str(i+1)] is True:
+            personStatusAll['room'+str(i+1)] = True
+
+print(personStatusAll)
 
 #checking if anyone in room
 #while True:
